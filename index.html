@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nút Phát Âm Thanh</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: radial-gradient(circle at center, #ffffff, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      touch-action: manipulation;
+    }
+
+    button {
+      width: 30vw;
+      max-width: 150px;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: none;
+      background: radial-gradient(circle at 30% 30%, #ff4d4d, #b30000);
+      box-shadow:
+        0 4px 10px rgba(255, 0, 0, 0.6);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button::after {
+      content: "";
+      position: absolute;
+      top: 15%;
+      left: 15%;
+      width: 70%;
+      height: 70%;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    button:active,
+    button.active {
+      transform: scale(0.93);
+      filter: brightness(1.2);
+    }
+  </style>
+</head>
+<body>
+
+  <button id="soundButton"></button>
+  <audio id="mySound" src= "buttonaudio.mp3" preload="auto"></audio>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("soundButton");
+      const sound = document.getElementById("mySound");
+
+      const playSound = (e) => {
+        e.preventDefault();
+        sound.currentTime = 0;
+        sound.play().catch(console.warn);
+        btn.classList.add("active");
+        setTimeout(() => btn.classList.remove("active"), 150);
+      };
+
+      btn.addEventListener("click", playSound);
+      btn.addEventListener("touchstart", playSound);
+    });
+  </script>
+
+</body>
+</html>
